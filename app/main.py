@@ -21,7 +21,18 @@ from app.database.connection import SessionLocal
 
 Base.metadata.create_all(bind=engine)
 app = FastAPI(title="Gestiones")
-origins = []
+origins = [
+    "http://localhost:3000",
+    "https://async-courses.vercel.app",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # RUTAS DE SWAGER XD
 
