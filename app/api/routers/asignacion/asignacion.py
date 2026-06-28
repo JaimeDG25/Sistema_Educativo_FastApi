@@ -1,4 +1,4 @@
-from fastapi import APIRouter,Depends
+from fastapi import APIRouter, Depends, HTTPException
 from datetime import datetime
 from typing import List, Optional, Union
 from app.services.asignacion_cu_as import AsignacionCuAsService
@@ -14,7 +14,8 @@ def get_list_asignacionCuAss(
     db: Session = Depends(get_db)
 ):
     service = AsignacionCuAsService(db)
-    return service.listar()
+    asignaciones = service.listar()
+    return [a for a in asignaciones if a.curso is not None]
 
 
 @router.get("/findAsignacionCuAsById/{id}", response_model=AsignacionCuAsResponse)
@@ -23,7 +24,10 @@ def get_find_asignacionCuAss_by_id(
     db: Session = Depends(get_db)
 )->AsignacionCuAsResponse:
     service = AsignacionCuAsService(db)
-    return service.buscarPorId(id)
+    asignacion = service.buscarPorId(id)
+    if not asignacion or asignacion.curso is None:
+        raise HTTPException(status_code=404, detail="Asignacion no encontrada o curso inexistente")
+    return asignacion
 
 
 @router.post("/addAsignacionCuAs", response_model=AsignacionCuAsResponse)

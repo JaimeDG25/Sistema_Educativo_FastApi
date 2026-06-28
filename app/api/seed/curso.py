@@ -12,4 +12,4 @@ def seed_curso(db):
     )
     db.add(curso)
     db.commit()
-    print("✅ Curso inicial creado")
+    print("Curso inicial creado")

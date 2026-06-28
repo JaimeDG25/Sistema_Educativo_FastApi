@@ -29,5 +29,5 @@ def seed_asistente(db):
     ]
     db.add_all(asistente)
     db.commit()
-    print("✅ Asistente inicial creado")
+    print("Asistente inicial creado")
 

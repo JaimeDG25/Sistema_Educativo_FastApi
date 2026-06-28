@@ -15,4 +15,4 @@ def seed_estudiante(db):
     )
     db.add(estudiante)
     db.commit()
-    print("✅ Estudiante inicial creado")
+    print("Estudiante inicial creado")

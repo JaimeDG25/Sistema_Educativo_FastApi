@@ -1,6 +1,6 @@
 # app/api/routers/estudiantes/estudiantes.py
 
-from fastapi import APIRouter,Depends
+from fastapi import APIRouter, Depends, HTTPException
 from datetime import datetime
 from typing import List, Optional, Union
 from app.services.estudiantes import EstudiantesService
@@ -25,7 +25,10 @@ def get_find_estudiante_by_id(
     db: Session = Depends(get_db)
 )->EstudianteResponse:
     service = EstudiantesService(db)
-    return service.buscarPorId(id)
+    estudiante = service.buscarPorId(id)
+    if not estudiante:
+        raise HTTPException(status_code=404, detail="Estudiante no encontrado")
+    return estudiante
 
 
 @router.post("/addEstudiante", response_model=EstudianteResponse)
@@ -44,4 +47,17 @@ def delete_eliminate_estudiante(
 ):
     service = EstudiantesService(db)
     return service.eliminar(id)
+
+
+@router.put("/updateEstudiante/{id}", response_model=EstudianteResponse)
+def put_update_estudiante(
+    id: int,
+    data: EstudianteRequest,
+    db: Session = Depends(get_db)
+)-> EstudianteResponse:
+    service = EstudiantesService(db)
+    estudiante = service.actualizar(id, data)
+    if not estudiante:
+        raise HTTPException(status_code=404, detail="Estudiante no encontrado")
+    return estudiante
 

@@ -15,5 +15,6 @@ class MaterialCurso(Base):
     estadoMaterial = Column(Boolean, nullable=False)
     urlMaterial = Column(String, nullable=False)
     fechaSubidaMaterial = Column(Date, nullable=False)
+    semana = Column(Integer, nullable=True, default=1)
 
     asignacion = relationship("AsignacionCuAs")

@@ -38,3 +38,18 @@ class AsistenteService:
         self.db.delete(asistente)
         self.db.commit()
         return asistente
+
+    def actualizar(self, id: int, data: AsistenteRequest):
+        asistente = self.db.query(Asistente).filter(Asistente.id == id).first()
+        if not asistente:
+            return None
+        asistente.nombreEmpleado = data.nombreEmpleado
+        asistente.apellidoEmpleado = data.apellidoEmpleado
+        asistente.dniEmpleado = data.dniEmpleado
+        asistente.correoEmpleado = data.correoEmpleado
+        asistente.rolesEmpleado = data.rolesEmpleado
+        if data.passwordEmpleado:
+            asistente.passwordEmpleado = hash_password(data.passwordEmpleado)
+        self.db.commit()
+        self.db.refresh(asistente)
+        return asistente

@@ -2,6 +2,8 @@
 from pydantic import BaseModel
 from enum import Enum
 
+from typing import Optional
+
 class RolEmpleado(str, Enum):
     ADMIN = "ADMIN"
     ASISTENTE = "ASISTENTE"
@@ -11,8 +13,9 @@ class AsistenteRequest(BaseModel):
     apellidoEmpleado: str
     dniEmpleado: str
     correoEmpleado: str
-    passwordEmpleado:str
+    passwordEmpleado: str
     rolesEmpleado: RolEmpleado
+    habilitadoEmpleado: Optional[bool] = True
 
 class AsistenteResponse(BaseModel):
     id: int
@@ -20,7 +23,9 @@ class AsistenteResponse(BaseModel):
     apellidoEmpleado: str
     dniEmpleado: str
     correoEmpleado: str
-    passwordEmpleado:str
+    passwordEmpleado: str
     rolesEmpleado: RolEmpleado
+    habilitadoEmpleado: bool
+    habilitado: bool
     class Config:
         from_attributes = True

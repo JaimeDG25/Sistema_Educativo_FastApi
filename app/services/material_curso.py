@@ -26,7 +26,8 @@ class MaterialCursoService:
             tipoMaterial=data.tipoMaterial,
             estadoMaterial=data.estadoMaterial,
             urlMaterial=data.urlMaterial,
-            fechaSubidaMaterial=date.today()
+            fechaSubidaMaterial=date.today(),
+            semana=data.semana
         )
 
         self.db.add(nuevo_material)
@@ -34,3 +35,31 @@ class MaterialCursoService:
         self.db.refresh(nuevo_material)
 
         return nuevo_material
+
+    def actualizar(self, id: int, data: MaterialCursoRequest):
+        material = self.db.query(MaterialCurso).filter(MaterialCurso.id == id).first()
+        if not material:
+            return None
+        asignacion = self.db.query(AsignacionCuAs).filter(AsignacionCuAs.id == data.asignacionCuAsIdMaterial).first()
+        if not asignacion:
+            raise Exception("La asignacion no existe")
+
+        material.asignacionCuAsIdMaterial = data.asignacionCuAsIdMaterial
+        material.tituloMaterial = data.tituloMaterial
+        material.descripcionMaterial = data.descripcionMaterial
+        material.tipoMaterial = data.tipoMaterial
+        material.estadoMaterial = data.estadoMaterial
+        material.urlMaterial = data.urlMaterial
+        material.semana = data.semana
+
+        self.db.commit()
+        self.db.refresh(material)
+        return material
+
+    def eliminar(self, id: int):
+        material = self.db.query(MaterialCurso).filter(MaterialCurso.id == id).first()
+        if not material:
+            return None
+        self.db.delete(material)
+        self.db.commit()
+        return material

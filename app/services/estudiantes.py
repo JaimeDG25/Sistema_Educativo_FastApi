@@ -2,6 +2,7 @@
 from sqlalchemy.orm import Session
 from app.models.estudiantes import Estudiantes
 from app.schemas.estudiantes import (EstudianteRequest, EstudianteResponse)
+from app.core.password_security import hash_password
 
 class EstudiantesService:
     def __init__(self, db: Session):
@@ -16,13 +17,15 @@ class EstudiantesService:
         return asistente_encontrado
 
     def crear(self, data: EstudianteRequest):
+        raw_password = data.passwordEstudiante or "student123"
         asistente = Estudiantes(
             nombreEstudiante = data.nombreEstudiante,
             apellidoEstudiante = data.apellidoEstudiante,
             dniEstudiante = data.dniEstudiante,
             correoEstudiante = data.correoEstudiante,
             habilitadoEstudiante = data.habilitadoEstudiante,
-            rolEstudiante = data.rolEstudiante
+            rolEstudiante = data.rolEstudiante,
+            passwordEstudiante = hash_password(raw_password)
         )
         self.db.add(asistente)
         self.db.commit()
@@ -36,3 +39,19 @@ class EstudiantesService:
         self.db.delete(asistente)
         self.db.commit()
         return asistente
+
+    def actualizar(self, id: int, data: EstudianteRequest):
+        estudiante = self.db.query(Estudiantes).filter(Estudiantes.id == id).first()
+        if not estudiante:
+            return None
+        estudiante.nombreEstudiante = data.nombreEstudiante
+        estudiante.apellidoEstudiante = data.apellidoEstudiante
+        estudiante.dniEstudiante = data.dniEstudiante
+        estudiante.correoEstudiante = data.correoEstudiante
+        estudiante.habilitadoEstudiante = data.habilitadoEstudiante
+        estudiante.rolEstudiante = data.rolEstudiante
+        if data.passwordEstudiante:
+            estudiante.passwordEstudiante = hash_password(data.passwordEstudiante)
+        self.db.commit()
+        self.db.refresh(estudiante)
+        return estudiante

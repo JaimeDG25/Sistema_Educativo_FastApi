@@ -22,6 +22,14 @@ class AsignacionCuAsService:
         if not curso:
             raise Exception("El curso no existe")
 
+        # Check if already assigned to prevent duplicates
+        existente = self.db.query(AsignacionCuAs).filter(
+            AsignacionCuAs.asistenteIdAsignacionCuAs == data.asistenteIdAsignacionCuAs,
+            AsignacionCuAs.cursoIdAsignacionCuAs == data.cursoIdAsignacionCuAs
+        ).first()
+        if existente:
+            return existente
+
         nueva_asignacion = AsignacionCuAs(
             asistenteIdAsignacionCuAs=data.asistenteIdAsignacionCuAs,
             cursoIdAsignacionCuAs=data.cursoIdAsignacionCuAs,

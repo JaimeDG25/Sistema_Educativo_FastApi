@@ -15,5 +15,6 @@ def login(
     data: LoginRequest,
     db: Session = Depends(get_db)
 ):
+    print("INCOMING LOGIN REQUEST:", data.dict())
     service = LoginService(db)
     return service.login(data)

@@ -1,4 +1,4 @@
-from fastapi import APIRouter,Depends
+from fastapi import APIRouter, Depends, HTTPException
 from datetime import datetime
 from typing import List, Optional, Union
 from app.services.evaluacion_curso import EvaluacionCursoService
@@ -17,12 +17,25 @@ def get_list_evaluacion_curso(
     return service.listar()
 
 
-@router.post("/addEvaluacionCurso", response_model=EvaluacionCursoResponse)
+@router.post("/addEvaluacionCurso", response_model=MaterialCursoResponse if False else EvaluacionCursoResponse)
 def post_add_evaluacion_curso(
     data: EvaluacionCursoRequest,
     db: Session = Depends(get_db)
 )->EvaluacionCursoResponse:
     service = EvaluacionCursoService(db)
     return service.crear(data)
+
+
+@router.put("/updateEvaluacionCurso/{id}", response_model=EvaluacionCursoResponse)
+def put_update_evaluacion_curso(
+    id: int,
+    data: EvaluacionCursoRequest,
+    db: Session = Depends(get_db)
+)->EvaluacionCursoResponse:
+    service = EvaluacionCursoService(db)
+    evaluacion = service.actualizar(id, data)
+    if not evaluacion:
+        raise HTTPException(status_code=404, detail="Evaluación no encontrada")
+    return evaluacion
 
 

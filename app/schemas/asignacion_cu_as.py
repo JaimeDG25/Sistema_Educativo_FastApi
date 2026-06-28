@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from datetime import date, datetime
+from typing import Optional
 
 class AsistenteResponse(BaseModel):
     id: int
@@ -26,9 +27,9 @@ class AsignacionCuAsRequest(BaseModel):
 class AsignacionCuAsResponse(BaseModel):
     id : int
     asistenteIdAsignacionCuAs: int
-    asistente: AsistenteResponse
+    asistente: Optional[AsistenteResponse] = None
     cursoIdAsignacionCuAs: int
-    curso: CursoResponse
+    curso: Optional[CursoResponse] = None
     fechaAsignacionCuAs :datetime
     class Config:
         from_attributes = True

@@ -1,6 +1,7 @@
 # app/services/inscripcion_es_cu.py
 from sqlalchemy.orm import Session
 from datetime import date, datetime
+from typing import Optional
 from app.models.estudiantes import Estudiantes
 from app.models.asignacion_cu_as import AsignacionCuAs
 from app.models.inscripcion_es_cu import InscripcionEsCu
@@ -11,9 +12,15 @@ class InscripcionEsCuService:
     def __init__(self, db: Session):
         self.db = db
 
-    def listar(self):
-        inscripciones = self.db.query(InscripcionEsCu).all()
-        return inscripciones
+    def listar(self, estudiante_id: Optional[int] = None):
+        from sqlalchemy.orm import joinedload
+        query = self.db.query(InscripcionEsCu).options(
+            joinedload(InscripcionEsCu.estudiante),
+            joinedload(InscripcionEsCu.asignacion).joinedload(AsignacionCuAs.curso)
+        )
+        if estudiante_id is not None:
+            query = query.filter(InscripcionEsCu.estudianteIdInscripcion == estudiante_id)
+        return query.all()
     
     def crear(self, data: InscripcionEsCuRequest):
         estudiante = self.db.query(Estudiantes).filter(Estudiantes.id == data.estudianteIdInscripcion).first()

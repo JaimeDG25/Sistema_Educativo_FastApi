@@ -13,3 +13,4 @@ class Estudiantes(Base):
     correoEstudiante = Column(String(50), nullable=False)
     habilitadoEstudiante = Column(Boolean, default=True)
     rolEstudiante = Column(String,nullable=False)
+    passwordEstudiante = Column(String, nullable=True)

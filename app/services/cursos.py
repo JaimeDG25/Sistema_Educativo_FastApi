@@ -33,3 +33,14 @@ class CursosService:
         self.db.delete(asistente)
         self.db.commit()
         return asistente
+
+    def actualizar(self, id: int, data: CursoRequest):
+        curso = self.db.query(Cursos).filter(Cursos.id == id).first()
+        if not curso:
+            return None
+        curso.nombreCurso = data.nombreCurso
+        curso.descripcionCurso = data.descripcionCurso
+        curso.creditosCurso = data.creditosCurso
+        self.db.commit()
+        self.db.refresh(curso)
+        return curso

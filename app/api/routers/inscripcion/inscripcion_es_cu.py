@@ -1,4 +1,4 @@
-from fastapi import APIRouter,Depends
+from fastapi import APIRouter, Depends, HTTPException
 from datetime import datetime
 from typing import List, Optional, Union
 from app.services.inscripcion_es_cu import InscripcionEsCuService
@@ -11,10 +11,15 @@ router= APIRouter(prefix="/inscripcionEsCu" , tags=["INSCRIPCION_ES_CU"])
 
 @router.get("/listInscripcionEsCu", response_model=list[InscripcionEsCuResponse])
 def get_list_inscripcion_es_cu(
+    estudianteId: Optional[int] = None,
     db: Session = Depends(get_db)
 ):
     service = InscripcionEsCuService(db)
-    return service.listar()
+    inscripciones = service.listar(estudiante_id=estudianteId)
+    return [
+        i for i in inscripciones 
+        if i.asignacion is not None and i.asignacion.curso is not None and i.estudiante is not None
+    ]
 
 
 @router.post("/addInscripcionEsCu", response_model=InscripcionEsCuResponse)

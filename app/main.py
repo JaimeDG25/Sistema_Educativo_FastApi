@@ -19,8 +19,15 @@ from app.api.seed.estudiante import seed_estudiante
 from app.api.seed.curso import seed_curso
 from app.database.connection import SessionLocal
 
+from fastapi.staticfiles import StaticFiles
+import os
+
 Base.metadata.create_all(bind=engine)
 app = FastAPI(title="Gestiones")
+
+# Asegurar directorios de carga de archivos y montar StaticFiles
+os.makedirs("public/uploads/materials", exist_ok=True)
+app.mount("/public", StaticFiles(directory="public"), name="public")
 origins = [
     "http://localhost:3000",
     "https://async-courses.vercel.app",

@@ -19,3 +19,7 @@ class Asistente(Base):
     passwordEmpleado = Column(String, nullable=False)
     rolesEmpleado = Column(SqlEnum(RolEmpleado),nullable=False)
 
+    @property
+    def habilitado(self) -> bool:
+        return self.habilitadoEmpleado if self.habilitadoEmpleado is not None else True
+

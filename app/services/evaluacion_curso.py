@@ -16,9 +16,10 @@ class EvaluacionCursoService:
         return evaluacion
     
     def crear(self, data: EvaluacionCursoRequest):
-        inscripcion = self.db.query(InscripcionEsCu).filter(InscripcionEsCu.id == data.inscripcionEsCuEvaluacion).first()
-        if not inscripcion:
-            raise Exception("La inscripcion no existe")
+        if data.inscripcionEsCuEvaluacion is not None:
+            inscripcion = self.db.query(InscripcionEsCu).filter(InscripcionEsCu.id == data.inscripcionEsCuEvaluacion).first()
+            if not inscripcion:
+                raise Exception("La inscripcion no existe")
         material = self.db.query(MaterialCurso).filter(MaterialCurso.id == data.materialCuEvaluacion).first()
         if not material:
             raise Exception("El material no existe")
@@ -28,9 +29,35 @@ class EvaluacionCursoService:
             tituloEvaluacion = data.tituloEvaluacion,
             porcentajeEvaluacion = data.porcentajeEvaluacion,
             puntosEvaluacion = data.puntosEvaluacion,
-            fechaSubidaEvaluacion = date.today()
+            preguntasEvaluacion = data.preguntasEvaluacion,
+            fechaSubidaEvaluacion = date.today(),
+            semana = data.semana
         )
         self.db.add(nueva_evaluacion)
         self.db.commit()
         self.db.refresh(nueva_evaluacion)
         return nueva_evaluacion
+
+    def actualizar(self, id: int, data: EvaluacionCursoRequest):
+        evaluacion = self.db.query(EvaluacionCurso).filter(EvaluacionCurso.id == id).first()
+        if not evaluacion:
+            return None
+        if data.inscripcionEsCuEvaluacion is not None:
+            inscripcion = self.db.query(InscripcionEsCu).filter(InscripcionEsCu.id == data.inscripcionEsCuEvaluacion).first()
+            if not inscripcion:
+                raise Exception("La inscripcion no existe")
+        material = self.db.query(MaterialCurso).filter(MaterialCurso.id == data.materialCuEvaluacion).first()
+        if not material:
+            raise Exception("El material no existe")
+
+        evaluacion.materialCuEvaluacion = data.materialCuEvaluacion
+        evaluacion.inscripcionEsCuEvaluacion = data.inscripcionEsCuEvaluacion
+        evaluacion.tituloEvaluacion = data.tituloEvaluacion
+        evaluacion.porcentajeEvaluacion = data.porcentajeEvaluacion
+        evaluacion.puntosEvaluacion = data.puntosEvaluacion
+        evaluacion.preguntasEvaluacion = data.preguntasEvaluacion
+        evaluacion.semana = data.semana
+
+        self.db.commit()
+        self.db.refresh(evaluacion)
+        return evaluacion

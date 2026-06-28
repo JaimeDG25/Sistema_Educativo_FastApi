@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 class EstudianteRequest(BaseModel):
     nombreEstudiante : str
@@ -7,6 +8,7 @@ class EstudianteRequest(BaseModel):
     correoEstudiante : str
     habilitadoEstudiante : bool
     rolEstudiante : str
+    passwordEstudiante : Optional[str] = None
 
 class EstudianteResponse(BaseModel):
     id : int
@@ -16,5 +18,6 @@ class EstudianteResponse(BaseModel):
     correoEstudiante : str
     habilitadoEstudiante : bool
     rolEstudiante : str
+    passwordEstudiante : Optional[str] = None
     class Config:
         from_attributes = True

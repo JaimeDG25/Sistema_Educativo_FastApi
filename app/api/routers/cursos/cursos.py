@@ -1,6 +1,4 @@
-# app/api/routers/cursos/cursos.py
-
-from fastapi import APIRouter,Depends
+from fastapi import APIRouter, Depends, HTTPException
 from datetime import datetime
 from typing import List, Optional, Union
 from app.services.cursos import CursosService
@@ -44,4 +42,17 @@ def delete_eliminate_curso(
 ):
     service = CursosService(db)
     return service.eliminar(id)
+
+
+@router.put("/updateCurso/{id}", response_model=CursoResponse)
+def put_update_curso(
+    id: int,
+    data: CursoRequest,
+    db: Session = Depends(get_db)
+)->CursoResponse:
+    service = CursosService(db)
+    curso = service.actualizar(id, data)
+    if not curso:
+        raise HTTPException(status_code=404, detail="Curso no encontrado")
+    return curso
 
