@@ -9,6 +9,8 @@ class EstudianteResponse(BaseModel):
     correoEstudiante : str
     habilitadoEstudiante : bool
     rolEstudiante : str
+    puntos : int = 0
+    points : int = 0
     class Config:
         from_attributes = True
 

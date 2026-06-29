@@ -14,3 +14,8 @@ class Estudiantes(Base):
     habilitadoEstudiante = Column(Boolean, default=True)
     rolEstudiante = Column(String,nullable=False)
     passwordEstudiante = Column(String, nullable=True)
+    puntos = Column(Integer, default=0, nullable=False)
+
+    @property
+    def points(self) -> int:
+        return self.puntos if self.puntos is not None else 0
