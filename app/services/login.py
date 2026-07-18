@@ -20,7 +20,7 @@ class LoginService:
         
         if usuario:
             if not verify_password(
-                data.password.get_secret_value(),
+                data.password,
                 usuario.passwordEmpleado
             ):
                 raise HTTPException(
@@ -51,7 +51,9 @@ class LoginService:
                 status_code=401,
                 detail="Usuario no encontrado"
             )
-
+        print("Password ingresada:", data.password)
+        print("Password almacenada:", estudiante.passwordEstudiante)
+        print("Tipo:", type(estudiante.passwordEstudiante))
         if not estudiante.passwordEstudiante or not verify_password(
             data.password,
             estudiante.passwordEstudiante
