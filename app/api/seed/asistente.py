@@ -13,18 +13,27 @@ def seed_asistente(db):
             apellidoEmpleado="Tsakio",
             habilitadoEmpleado=True,
             dniEmpleado="87654321",
-            correoEmpleado="asistente@gmail.com",
+            correoEmpleado="asistente1@gmail.com",
             passwordEmpleado=hash_password("12345"),
             rolesEmpleado=RolEmpleado.ADMIN
         ),
         Asistente(
-            nombreEmpleado="Ñiero",
+            nombreEmpleado="Terros",
+            apellidoEmpleado="Lock",
+            habilitadoEmpleado=True,
+            dniEmpleado="88654321",
+            correoEmpleado="asistente2@gmail.com",
+            passwordEmpleado=hash_password("12345"),
+            rolesEmpleado=RolEmpleado.ADMIN
+        ),
+        Asistente(
+            nombreEmpleado="Piero",
             apellidoEmpleado="Vazques",
             habilitadoEmpleado=False,
             dniEmpleado="88765432",
             correoEmpleado="tacza@gmail.com",
             passwordEmpleado=hash_password("12345"),
-            rolesEmpleado=RolEmpleado.ADMIN
+            rolesEmpleado=RolEmpleado.ASISTENTE
         )
     ]
     db.add_all(asistente)

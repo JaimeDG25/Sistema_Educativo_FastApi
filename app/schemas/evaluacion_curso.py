@@ -70,7 +70,7 @@ class EvaluacionCursoRequest(BaseModel):
     tituloEvaluacion : str
     porcentajeEvaluacion : float
     puntosEvaluacion : float
-    fechaSubidaEvaluacion : datetime
+    fechaSubidaEvaluacion : date
     preguntasEvaluacion : Optional[str] = None
     semana : Optional[int] = 1
 
