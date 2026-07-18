@@ -31,6 +31,7 @@ app.mount("/public", StaticFiles(directory="public"), name="public")
 origins = [
     "http://localhost:3000",
     "https://async-courses.vercel.app",
+    "https://async-courses-835fgf5d3-kalcios-projects.vercel.app/",
 ]
 
 app.add_middleware(
