@@ -4,9 +4,9 @@ from app.database.base import Base
 from enum import Enum
 
 class Cursos(Base):
-    __tablename__ = "cursos-table"
+    __tablename__ = "cursos_table"
 
     id = Column(Integer,primary_key=True)
-    nombreCurso = Column(String, nullable=False)
-    descripcionCurso = Column(String, nullable=False)
+    nombreCurso = Column(String(100), nullable=False)
+    descripcionCurso = Column(String(100), nullable=False)
     creditosCurso = Column(Integer, nullable=False)

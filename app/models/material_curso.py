@@ -9,11 +9,11 @@ class MaterialCurso(Base):
 
     id = Column(Integer,primary_key=True)
     asignacionCuAsIdMaterial = Column(Integer, ForeignKey("asignacion-cu-as-table.id"), nullable=False)
-    tituloMaterial = Column(String, nullable=False)
-    descripcionMaterial = Column(String, nullable=False)
-    tipoMaterial = Column(String, nullable=False)
+    tituloMaterial = Column(String(100), nullable=False)
+    descripcionMaterial = Column(String(100), nullable=False)
+    tipoMaterial = Column(String(100), nullable=False)
     estadoMaterial = Column(Boolean, nullable=False)
-    urlMaterial = Column(String, nullable=False)
+    urlMaterial = Column(String(100), nullable=False)
     fechaSubidaMaterial = Column(Date, nullable=False)
     semana = Column(Integer, nullable=True, default=1)
 

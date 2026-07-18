@@ -8,8 +8,8 @@ class AsignacionCuAs(Base):
     __tablename__ = "asignacion-cu-as-table"
 
     id = Column(Integer,primary_key=True)
-    asistenteIdAsignacionCuAs = Column(Integer, ForeignKey("asistentes-table.id"), nullable=False)
-    cursoIdAsignacionCuAs = Column(Integer, ForeignKey("cursos-table.id"), nullable=False)
+    asistenteIdAsignacionCuAs = Column(Integer, ForeignKey("asistentes_table.id"), nullable=False)
+    cursoIdAsignacionCuAs = Column(Integer, ForeignKey("cursos_table.id"), nullable=False)
     fechaAsignacionCuAs = Column(Date, nullable=False)
 
     asistente = relationship("Asistente")

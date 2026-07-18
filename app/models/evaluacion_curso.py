@@ -9,11 +9,11 @@ class EvaluacionCurso(Base):
     id = Column(Integer,primary_key=True)
     materialCuEvaluacion = Column(Integer, ForeignKey("material-curso-table.id"), nullable=False)
     inscripcionEsCuEvaluacion = Column(Integer, ForeignKey("inscripcion-es-cu-table.id"), nullable=True)
-    tituloEvaluacion= Column(String, nullable=False)
+    tituloEvaluacion= Column(String(100), nullable=False)
     porcentajeEvaluacion= Column(Numeric, nullable=False)
     puntosEvaluacion= Column(Numeric, nullable=False)
     fechaSubidaEvaluacion = Column(Date, nullable=False)
-    preguntasEvaluacion = Column(String, nullable=True)
+    preguntasEvaluacion = Column(String(100), nullable=True)
     semana = Column(Integer, nullable=True, default=1)
 
     inscripcion = relationship("InscripcionEsCu")

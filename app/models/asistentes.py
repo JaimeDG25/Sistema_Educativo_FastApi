@@ -8,15 +8,15 @@ class RolEmpleado(str, Enum):
     ASISTENTE = "ASISTENTE"
 
 class Asistente(Base):
-    __tablename__ = "asistentes-table"
+    __tablename__ = "asistentes_table"
 
     id = Column(Integer, primary_key=True)
-    nombreEmpleado = Column(String)
-    apellidoEmpleado = Column(String)
+    nombreEmpleado = Column(String(100), nullable=False)
+    apellidoEmpleado = Column(String(100), nullable=False)
     dniEmpleado = Column(String(8), unique=True)
-    correoEmpleado = Column(String(50), unique=True)
+    correoEmpleado = Column(String(100), unique=True)
     habilitadoEmpleado = Column(Boolean, default=True)
-    passwordEmpleado = Column(String, nullable=False)
+    passwordEmpleado = Column(String(100), nullable=False)
     rolesEmpleado = Column(SqlEnum(RolEmpleado),nullable=False)
 
     @property

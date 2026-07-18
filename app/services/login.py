@@ -20,7 +20,7 @@ class LoginService:
         
         if usuario:
             if not verify_password(
-                data.password,
+                data.password.get_secret_value(),
                 usuario.passwordEmpleado
             ):
                 raise HTTPException(
