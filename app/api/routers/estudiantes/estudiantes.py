@@ -5,7 +5,6 @@ from datetime import datetime
 from typing import List, Optional, Union
 from app.services.estudiantes import EstudiantesService
 from app.schemas.estudiantes import EstudianteRequest, EstudianteResponse
-import pandas as pd
 from sqlalchemy.orm import Session
 from app.database.connection import get_db
 

@@ -3,7 +3,6 @@ from datetime import datetime
 from typing import List, Optional, Union
 from app.services.material_curso import MaterialCursoService
 from app.schemas.material_curso import MaterialCursoRequest,MaterialCursoResponse
-import pandas as pd
 from sqlalchemy.orm import Session
 from app.database.connection import get_db
 

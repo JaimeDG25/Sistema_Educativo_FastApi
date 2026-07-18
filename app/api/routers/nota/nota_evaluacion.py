@@ -3,7 +3,6 @@ from datetime import datetime
 from typing import List, Optional, Union
 from app.services.nota_evaluacion import NotaEvaluacionService
 from app.schemas.nota_evaluacion import NotaEvaluacionRequest, NotaEvaluacionResponse
-import pandas as pd
 from sqlalchemy.orm import Session
 from app.database.connection import get_db
 

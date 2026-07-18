@@ -3,7 +3,6 @@ from datetime import datetime
 from typing import List, Optional, Union
 from app.services.asignacion_cu_as import AsignacionCuAsService
 from app.schemas.asignacion_cu_as import AsignacionCuAsRequest,AsignacionCuAsResponse
-import pandas as pd
 from sqlalchemy.orm import Session
 from app.database.connection import get_db
 
